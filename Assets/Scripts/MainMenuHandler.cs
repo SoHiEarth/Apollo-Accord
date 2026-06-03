@@ -5,7 +5,7 @@ using System.Collections;
 
 public class MainMenuHandler : MonoBehaviour
 {
-    public GameObject camera;
+    public GameObject menuCamera;
     public GameObject canvas;
     public GameObject overlay;
     public GameObject startButton;
@@ -20,9 +20,9 @@ public class MainMenuHandler : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if (camera != null)
+        if (menuCamera != null)
         {
-            menuAnimator = camera.GetComponent<Animator>();
+            menuAnimator = menuCamera.GetComponent<Animator>();
         }
 
         if (overlay != null)
