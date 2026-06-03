@@ -25,8 +25,7 @@ public class PlayerMovement : MonoBehaviour
     bool jumpQueued;
     bool isGrounded;
     GameObject currentItemInstance;
-    Transform cameraTarget;
-    Transform viewTransform;
+    public GameObject playerCamera;
     float pitch;
     // Animated a thumping red vignette when hp is low
     public GameObject thumpVolume;
@@ -36,12 +35,6 @@ public class PlayerMovement : MonoBehaviour
     {
         playerRigidbody = GetComponent<Rigidbody>();
         playerCollider = GetComponent<CapsuleCollider>();
-
-        if (Camera.main != null)
-        {
-            cameraTarget = Camera.main.transform;
-            viewTransform = Camera.main.transform;
-        }
     }
 
     void SetItem(int index)
@@ -61,12 +54,7 @@ public class PlayerMovement : MonoBehaviour
             FaceObject faceObject = currentItemInstance.GetComponentInChildren<FaceObject>(true);
             if (faceObject != null)
             {
-                if (cameraTarget == null && Camera.main != null)
-                {
-                    cameraTarget = Camera.main.transform;
-                }
-
-                faceObject.target = cameraTarget;
+                faceObject.target = playerCamera.transform;
             }
         }
     }
@@ -112,6 +100,13 @@ public class PlayerMovement : MonoBehaviour
         {
             thumpAnimator = thumpVolume.GetComponent<Animator>();
         }
+
+        // get the playerdialouge component
+        PlayerDialouge playerDialouge = GetComponent<PlayerDialouge>();
+        if (playerDialouge != null)
+        {
+            playerDialouge.SetDialouge("Commander", "PUSH FORWARD! GO!", 2f);
+        }
     }
 
     void Update()
@@ -126,19 +121,6 @@ public class PlayerMovement : MonoBehaviour
             jumpQueued = true;
         }
 
-        if (Mouse.current == null)
-        {
-            return;
-        }
-
-        Vector2 mouseDelta = Mouse.current.delta.ReadValue() * mouseSensitivity * 0.1f;
-        transform.Rotate(0f, mouseDelta.x, 0f, Space.Self);
-
-        if (viewTransform != null)
-        {
-            pitch = Mathf.Clamp(pitch - mouseDelta.y, -85f, 85f);
-            viewTransform.localRotation = Quaternion.Euler(pitch, 0f, 0f);
-        }
         if (crouchAction != null && crouchAction.WasPressedThisFrame())
         {
             Animator animator = GetComponent<Animator>();
@@ -153,19 +135,32 @@ public class PlayerMovement : MonoBehaviour
         {
             if (currentItemInstance != null)
             {
-                WeaponScript weaponScript = currentItemInstance.GetComponentInChildren<WeaponScript>();
-                if (weaponScript != null)
-                {
-                    weaponScript.Reload();
-                }
                 // play reload animation
                 Animator animator = GetComponent<Animator>();
                 if (animator != null)
                 {
                     animator.SetTrigger("reload");
                 }
+                WeaponScript weaponScript = currentItemInstance.GetComponentInChildren<WeaponScript>();
+                if (weaponScript != null)
+                {
+                    weaponScript.Reload();
+                }
             }
         }
+
+        if (Mouse.current == null)
+        {
+            return;
+        }
+
+        Vector2 mouseDelta = Mouse.current.delta.ReadValue() * mouseSensitivity * 0.1f;
+        transform.Rotate(0f, mouseDelta.x, 0f, Space.Self);
+
+        // rotate the camera up and down based on mouse Y movement, clamping to prevent flipping
+        pitch = Mathf.Clamp(pitch - mouseDelta.y, -85f, 85f);
+        playerCamera.transform.localRotation = Quaternion.Euler(pitch, 0f, 0f);
+
         // if mouse button down, set animator's "isShooting" parameter to true, otherwise set it to false
         if (Mouse.current.leftButton.isPressed)
         {
