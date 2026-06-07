@@ -14,6 +14,8 @@ public class PlayerMovement : MonoBehaviour
     public InputAction jumpAction;
     public InputAction reloadAction;
     public InputAction crouchAction;
+    public InputAction leftLeanAction;
+    public InputAction rightLeanAction;
     public Transform itemTransform;
     CapsuleCollider playerCollider;
     public GameObject[] items;
@@ -92,6 +94,16 @@ public class PlayerMovement : MonoBehaviour
             crouchAction.Enable();
         }
 
+        if (leftLeanAction != null)
+        {
+            leftLeanAction.Enable();
+        }
+
+        if (rightLeanAction != null)
+        {
+            rightLeanAction.Enable();
+        }
+
         if (items.Length > 0)
         {
             SetItem(currentItemIndex);
@@ -99,13 +111,6 @@ public class PlayerMovement : MonoBehaviour
         if (thumpVolume != null)
         {
             thumpAnimator = thumpVolume.GetComponent<Animator>();
-        }
-
-        // get the playerdialouge component
-        PlayerDialouge playerDialouge = GetComponent<PlayerDialouge>();
-        if (playerDialouge != null)
-        {
-            playerDialouge.SetDialouge("Commander", "PUSH FORWARD! GO!", 2f);
         }
     }
 
@@ -116,31 +121,43 @@ public class PlayerMovement : MonoBehaviour
             moveInput = moveAction.ReadValue<Vector2>();
         }
 
+        Animator animator = GetComponent<Animator>();
+        if (animator == null)
+        {
+            return;
+        }
+
         if (jumpAction != null && jumpAction.WasPressedThisFrame())
         {
             jumpQueued = true;
         }
 
-        if (crouchAction != null && crouchAction.WasPressedThisFrame())
+        if (crouchAction != null)
         {
-            Animator animator = GetComponent<Animator>();
-            if (animator != null)
-                animator.SetBool("isCrouching", !animator.GetBool("isCrouching"));
+            animator.SetBool("isCrouching", crouchAction.IsPressed());
         }
+
+        if (leftLeanAction != null)
+        {
+            animator.SetBool("isLeaningLeft", leftLeanAction.IsPressed());
+        }
+
+        if (rightLeanAction != null)
+        {
+            animator.SetBool("isLeaningRight", rightLeanAction.IsPressed());
+        }
+
         if (thumpAnimator != null)
         {
             thumpAnimator.SetFloat("PlayerHealth", health);
         }
+
         if (reloadAction != null && reloadAction.WasPressedThisFrame())
         {
             if (currentItemInstance != null)
             {
                 // play reload animation
-                Animator animator = GetComponent<Animator>();
-                if (animator != null)
-                {
-                    animator.SetTrigger("reload");
-                }
+                animator.SetTrigger("reload");
                 WeaponScript weaponScript = currentItemInstance.GetComponentInChildren<WeaponScript>();
                 if (weaponScript != null)
                 {
@@ -148,18 +165,6 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
-
-        if (Mouse.current == null)
-        {
-            return;
-        }
-
-        Vector2 mouseDelta = Mouse.current.delta.ReadValue() * mouseSensitivity * 0.1f;
-        transform.Rotate(0f, mouseDelta.x, 0f, Space.Self);
-
-        // rotate the camera up and down based on mouse Y movement, clamping to prevent flipping
-        pitch = Mathf.Clamp(pitch - mouseDelta.y, -85f, 85f);
-        playerCamera.transform.localRotation = Quaternion.Euler(pitch, 0f, 0f);
 
         // if mouse button down, set animator's "isShooting" parameter to true, otherwise set it to false
         if (Mouse.current.leftButton.isPressed)
@@ -171,14 +176,31 @@ public class PlayerMovement : MonoBehaviour
                 if (weaponScript != null) {
                     if (weaponScript.Shoot())
                     {
-                        Animator animator = GetComponent<Animator>();
-                        if (animator != null) {
-                            animator.SetTrigger("shoot");
-                        }
+                        animator.SetTrigger("shoot");
                     }
                 }
             }
         }
+    }
+
+// Store the current X rotation of the player for use in mouse look
+// this prevents the animator from override the player's yaw rotation
+    float rotationX;
+    void LateUpdate()
+    {
+        if (Mouse.current == null)
+        {
+            return;
+        }
+
+        Vector2 mouseDelta = Mouse.current.delta.ReadValue() * mouseSensitivity * 0.1f;
+        rotationX += mouseDelta.x;
+        transform.rotation = Quaternion.Euler(0f, rotationX, 0f);
+
+
+        // rotate the camera up and down based on mouse Y movement, clamping to prevent flipping
+        pitch = Mathf.Clamp(pitch - mouseDelta.y, -85f, 85f);
+        playerCamera.transform.localRotation = Quaternion.Euler(pitch, 0f, 0f);
     }
 
     void FixedUpdate()

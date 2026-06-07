@@ -14,6 +14,9 @@ public class WeaponScript : MonoBehaviour
     public TextMeshPro ammoText;
     public TextMeshPro totalAmmoText;
     public GameObject muzzleSmoke;
+    public GameObject bulletPrefab;
+    public Transform firePoint;
+    public float bulletSpeed = 20f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {        
@@ -54,6 +57,15 @@ public class WeaponScript : MonoBehaviour
             {
                 muzzleSmoke.SetActive(true);
                 StartCoroutine(DisableMuzzleSmoke());
+            }
+            if (bulletPrefab != null && firePoint != null)
+            {
+                GameObject bulletInstance = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+                Rigidbody bulletRb = bulletInstance.GetComponent<Rigidbody>();
+                if (bulletRb != null)
+                {
+                    bulletRb.AddForce(firePoint.forward * bulletSpeed, ForceMode.Impulse);
+                }
             }
         }
         return true;

@@ -1610,6 +1610,40 @@ MonoBehaviour:
       m_Action: Crouch
       m_Flags: 0
     m_Flags: 0
+  leftLeanAction:
+    m_Name: Left Lean
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 35748d9b-92b9-4461-87d8-752ac6688a46
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: fb62d4ba-70ac-4975-88e6-cd1b908c1d6c
+      m_Path: <Keyboard>/q
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Left Lean
+      m_Flags: 0
+    m_Flags: 0
+  rightLeanAction:
+    m_Name: Right Lean
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: bdb2c10d-0bb9-43ec-ae15-36b8d3e4a348
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 44b659d8-94aa-4b66-9850-ee07d1a85778
+      m_Path: <Keyboard>/e
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Right Lean
+      m_Flags: 0
+    m_Flags: 0
   itemTransform: {fileID: 3104560091748425762}
   items:
   - {fileID: 8014747573080674833, guid: 85029930e35a440ed91e26c4b939c9d1, type: 3}
@@ -1653,7 +1687,7 @@ Rigidbody:
   serializedVersion: 5
   m_Mass: 1
   m_LinearDamping: 0
-  m_AngularDamping: 50
+  m_AngularDamping: 0
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -2584,7 +2618,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Content
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 59cbf91f024d9467399c96d60bd2529b, type: 2}
   m_sharedMaterial: {fileID: -8332336110531478338, guid: 59cbf91f024d9467399c96d60bd2529b, type: 2}
@@ -2611,7 +2645,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 14.95
+  m_fontSize: 24
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3143,7 +3177,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Speaker:'
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 59cbf91f024d9467399c96d60bd2529b, type: 2}
   m_sharedMaterial: {fileID: -8332336110531478338, guid: 59cbf91f024d9467399c96d60bd2529b, type: 2}
@@ -3170,7 +3204,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 14.95
+  m_fontSize: 24
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1

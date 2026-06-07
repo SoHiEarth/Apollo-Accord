@@ -67,13 +67,13 @@ public class PlayerDialouge : MonoBehaviour
             if (animator != null)
                 animator.SetTrigger("ShowDialouge");
 
-            yield return new WaitForSeconds(0.25f);
+            yield return new WaitForSeconds(0.15f);
             yield return new WaitForSeconds(entry.duration);
 
             if (animator != null)
                 animator.SetTrigger("HideDialouge");
 
-            yield return new WaitForSeconds(0.25f);
+            yield return new WaitForSeconds(0.15f);
 
             if (dialougePanel != null)
                 dialougePanel.SetActive(false);
