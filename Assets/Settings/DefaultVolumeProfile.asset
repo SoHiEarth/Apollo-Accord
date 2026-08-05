@@ -161,19 +161,19 @@ MonoBehaviour:
   active: 1
   postExposure:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: -0.62
   contrast:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 4
   colorFilter:
     m_OverrideState: 1
-    m_Value: {r: 1, g: 1, b: 1, a: 1}
+    m_Value: {r: 0.9009434, g: 0.9721947, b: 1, a: 1}
   hueShift:
     m_OverrideState: 1
     m_Value: 0
   saturation:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 14
 --- !u!114 &-6288072647309666549
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -189,7 +189,7 @@ MonoBehaviour:
   active: 1
   type:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 3
   intensity:
     m_OverrideState: 1
     m_Value: 0
@@ -214,7 +214,7 @@ MonoBehaviour:
   active: 1
   mode:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 1
   neutralHDRRangeReductionMode:
     m_OverrideState: 1
     m_Value: 2
@@ -223,10 +223,10 @@ MonoBehaviour:
     m_Value: 3
   hueShiftAmount:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 1
   detectPaperWhite:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 1
   paperWhite:
     m_OverrideState: 1
     m_Value: 300
@@ -238,7 +238,7 @@ MonoBehaviour:
     m_Value: 0.005
   maxNits:
     m_OverrideState: 1
-    m_Value: 1000
+    m_Value: 487
 --- !u!114 &-5360449096862653589
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -314,10 +314,10 @@ MonoBehaviour:
   active: 1
   normalBias:
     m_OverrideState: 1
-    m_Value: 0.33
+    m_Value: 0.05
   viewBias:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 0.1
   scaleBiasWithMinProbeDistance:
     m_OverrideState: 1
     m_Value: 0
@@ -329,7 +329,7 @@ MonoBehaviour:
     m_Value: 1
   leakReductionMode:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 2
   minValidDotProductValue:
     m_OverrideState: 1
     m_Value: 0.1
@@ -363,7 +363,7 @@ MonoBehaviour:
     m_Value: 1
   threshold:
     m_OverrideState: 1
-    m_Value: 0.9
+    m_Value: 8.68
   intensity:
     m_OverrideState: 1
     m_Value: 0
@@ -796,25 +796,25 @@ MonoBehaviour:
     m_Value: 0
   gaussianStart:
     m_OverrideState: 1
-    m_Value: 10
+    m_Value: 50
   gaussianEnd:
     m_OverrideState: 1
-    m_Value: 30
+    m_Value: 100
   gaussianMaxRadius:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0.5
   highQualitySampling:
     m_OverrideState: 1
     m_Value: 0
   focusDistance:
     m_OverrideState: 1
-    m_Value: 10
+    m_Value: 11.94
   aperture:
     m_OverrideState: 1
-    m_Value: 5.6
+    m_Value: 8
   focalLength:
     m_OverrideState: 1
-    m_Value: 50
+    m_Value: 52
   bladeCount:
     m_OverrideState: 1
     m_Value: 5

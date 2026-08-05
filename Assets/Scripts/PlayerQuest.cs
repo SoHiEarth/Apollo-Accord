@@ -57,4 +57,8 @@ public class PlayerQuest : MonoBehaviour
             }
         }
     }
+
+    void Start() {
+        HideQuest();
+    }
 }

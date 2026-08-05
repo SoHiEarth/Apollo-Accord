@@ -32,11 +32,16 @@ public class PlayerMovement : MonoBehaviour
     // Animated a thumping red vignette when hp is low
     public GameObject thumpVolume;
     Animator thumpAnimator;
+    float playerColliderDefaultHeight;
 
     void Awake()
     {
         playerRigidbody = GetComponent<Rigidbody>();
         playerCollider = GetComponent<CapsuleCollider>();
+        if (playerCollider != null)
+        {
+            playerColliderDefaultHeight = playerCollider.height;
+        }
     }
 
     void SetItem(int index)
@@ -135,6 +140,14 @@ public class PlayerMovement : MonoBehaviour
         if (crouchAction != null)
         {
             animator.SetBool("isCrouching", crouchAction.IsPressed());
+            if (crouchAction.IsPressed())
+            {
+                playerCollider.height = playerColliderDefaultHeight / 2f;
+            }
+            else
+            {
+                playerCollider.height = playerColliderDefaultHeight;
+            }
         }
 
         if (leftLeanAction != null)
