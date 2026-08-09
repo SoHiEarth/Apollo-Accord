@@ -326,7 +326,7 @@ MonoBehaviour:
     m_Value: 0.1
   animateSamplingNoise:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0
   leakReductionMode:
     m_OverrideState: 1
     m_Value: 2

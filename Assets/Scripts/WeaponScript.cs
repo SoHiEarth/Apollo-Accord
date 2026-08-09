@@ -10,23 +10,19 @@ public class WeaponScript : MonoBehaviour
     // milliseconds between shots
     public float fireRate = 0.1f;
     public float reloadTime = 2.5f;
+    public float damage = 10f;
     bool canShoot = true;
     public TextMeshPro ammoText;
     public TextMeshPro totalAmmoText;
     public GameObject muzzleSmoke;
     public GameObject bulletPrefab;
     public Transform firePoint;
-    public float bulletSpeed = 20f;
+    public float bulletSpeed = 500f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {        
         ammoText.text = currentAmmo.ToString();
         totalAmmoText.text = totalAmmo.ToString();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
     }
 
     System.Collections.IEnumerator ResetCanShoot()
@@ -60,11 +56,23 @@ public class WeaponScript : MonoBehaviour
             }
             if (bulletPrefab != null && firePoint != null)
             {
+                // Bullet prefab is for visual effect only
                 GameObject bulletInstance = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
                 Rigidbody bulletRb = bulletInstance.GetComponent<Rigidbody>();
                 if (bulletRb != null)
                 {
-                    bulletRb.AddForce(firePoint.forward * bulletSpeed, ForceMode.Impulse);
+                    bulletRb.linearVelocity = firePoint.forward * bulletSpeed;
+                }
+
+                // Also raycast
+                RaycastHit hit;
+                if (Physics.Raycast(firePoint.position, firePoint.forward, out hit, bulletSpeed * fireRate))
+                {
+                    Enemy enemy = hit.collider.GetComponent<Enemy>();
+                    if (enemy != null)
+                    {
+                        enemy.TakeDamage(damage);
+                    }
                 }
             }
         }

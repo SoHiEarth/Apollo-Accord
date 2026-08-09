@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class DialougeTrigger : MonoBehaviour
 {
-    Collider thisCollider;
+    BoxCollider thisCollider;
     public string speaker = "";
     public string[] dialouge = new string[0];
     public float dialougeDuration = 2f;
@@ -12,7 +12,7 @@ public class DialougeTrigger : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        thisCollider = GetComponent<Collider>();
+        thisCollider = this.GetComponent<BoxCollider>();
     }
 
     System.Collections.IEnumerator ResetTriggerAfterTime(float duration)
@@ -32,7 +32,7 @@ public class DialougeTrigger : MonoBehaviour
             {
                 foreach (string line in dialouge)
                 {
-                    playerDialouge.SetDialouge(speaker, line, dialougeDuration);
+                    playerDialouge.SetDialouge(speaker, line, dialougeDuration, thisCollider);
                 }
                 if (playOnce)
                     hasPlayed = true;
