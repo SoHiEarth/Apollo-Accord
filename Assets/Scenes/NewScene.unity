@@ -58611,24 +58611,6 @@ Mesh:
       - serializedVersion: 1
         m_IndexStart: 0
         m_IndexCount: 0
---- !u!1 &781963662 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3537238484300961562, guid: 07a24b328bad34f4faa2d48ddba473ca, type: 3}
-  m_PrefabInstance: {fileID: 1123887067}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &781963669
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 781963662}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9dded80fc61a4b9a8fd24b94d777666, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerQuest
-  questPanel: {fileID: 0}
 --- !u!43 &783083649
 Mesh:
   m_ObjectHideFlags: 0
@@ -85160,10 +85142,7 @@ PrefabInstance:
     m_RemovedGameObjects:
     - {fileID: 6366268867444783094, guid: 07a24b328bad34f4faa2d48ddba473ca, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3537238484300961562, guid: 07a24b328bad34f4faa2d48ddba473ca, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 781963669}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 07a24b328bad34f4faa2d48ddba473ca, type: 3}
 --- !u!43 &1124196155
 Mesh:
