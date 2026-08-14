@@ -27,12 +27,12 @@ public class Enemy : MonoBehaviour
   [Header("Projectile Settings")]
   public bool canEmitProjectiles = true;
   public GameObject projectilePrefab;
+  public Transform firePoint;
   public float projectileSpeed = 15f;
   public float projectileRange = 20f;
   public float projectileCooldown = 1f;
   public float projectileDamage = 5f;
   private float projectileCooldownTimer = 0f;
-
   private NavMeshAgent agent;
   private Transform player;
   private float distanceToPlayer;
@@ -103,7 +103,7 @@ public class Enemy : MonoBehaviour
     if (projectileCooldownTimer <= 0f)
     {
       // Perform projectile attack
-      GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+      GameObject projectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
       projectile.GetComponent<Rigidbody>().linearVelocity = (player.position - transform.position).normalized * projectileSpeed;
       projectile.GetComponent<Projectile>().damage = projectileDamage;
       projectileCooldownTimer = projectileCooldown;

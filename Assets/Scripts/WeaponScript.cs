@@ -66,7 +66,7 @@ public class WeaponScript : MonoBehaviour
 
                 // Also raycast
                 RaycastHit hit;
-                if (Physics.Raycast(firePoint.position, firePoint.forward, out hit, bulletSpeed * fireRate))
+                if (Physics.Raycast(firePoint.position, firePoint.forward, out hit, bulletSpeed))
                 {
                     Enemy enemy = hit.collider.GetComponent<Enemy>();
                     if (enemy != null)

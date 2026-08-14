@@ -3,26 +3,26 @@ using TMPro;
 
 public class QuestInterface : MonoBehaviour
 {
-    public TextMeshProUGUI quest_title;
-    public TextMeshProUGUI quest_description;
+    public TextMeshProUGUI QuestTitle;
+    public TextMeshProUGUI QuestDescription;
 
     public void SetQuestTitle(string title)
     {
-        if (quest_title != null)
-            quest_title.text = title;
+        if (QuestTitle != null)
+            QuestTitle.text = title;
     }
 
     public string GetQuestTitle()
     {
-        if (quest_title != null)
-            return quest_title.text;
+        if (QuestTitle != null)
+            return QuestTitle.text;
         return "";
     }
 
     public void SetQuestDescription(string description)
     {
-        if (quest_description != null)
-            quest_description.text = description;
+        if (QuestDescription != null)
+            QuestDescription.text = description;
     }
 
     public void ShowQuestInterface()
@@ -32,10 +32,10 @@ public class QuestInterface : MonoBehaviour
 
     public void ResetQuestInterface()
     {
-        if (quest_title != null)
-            quest_title.text = "";
-        if (quest_description != null)
-            quest_description.text = "";
+        if (QuestTitle != null)
+            QuestTitle.text = "";
+        if (QuestDescription != null)
+            QuestDescription.text = "";
         this.gameObject.SetActive(false);
     }
 }

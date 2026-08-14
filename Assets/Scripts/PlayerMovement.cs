@@ -1,12 +1,32 @@
 using UnityEngine;
+using TMPro;
 using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
+  [Header("Health Settings")]
   public float health = 100f;
+  public float maxHealth = 100f;
+  public bool canRegenerateHealth = true;
+  public float healthRegenMaxTotalAmount = 40f;
+  private float totalHealthRegenerated = 0f;
+  private float healthRegenTimer = 0f;
+  public float healthRegenRate = 1f;
+  public float healthRegenAmount = 1f;
+  public float healthRegenStartDelay = 5f;
+  public RectTransform healthBar;
+  public RectTransform healthBarBackground;
+  public TextMeshProUGUI healthText;
+  [Header("Movement Settings")]
   public float speed = 5f;
   public float runMultiplier = 1.5f;
   public float jumpForce = 5f;
+  public float groundCheckDistance = 0.15f;
+  public LayerMask groundLayers = ~0;
+  Rigidbody playerRigidbody;
+  Vector2 moveInput;
+  bool jumpQueued;
+  bool isGrounded;
   public float mouseSensitivity = 2f;
   public bool lockCursor = true;
   public InputAction moveAction;
@@ -15,18 +35,13 @@ public class PlayerMovement : MonoBehaviour
   public InputAction reloadAction;
   public InputAction crouchAction;
   public InputAction flashlightAction;
+  [Header("Item Settings")]
   public bool flashlightEnabled = true;
   public GameObject flashlight;
   public Transform itemTransform;
   CapsuleCollider playerCollider;
   public GameObject[] items;
   public int currentItemIndex = 0;
-  public float groundCheckDistance = 0.15f;
-  public LayerMask groundLayers = ~0;
-  Rigidbody playerRigidbody;
-  Vector2 moveInput;
-  bool jumpQueued;
-  bool isGrounded;
   GameObject currentItemInstance;
   public GameObject playerCamera;
   float pitch;
@@ -125,6 +140,30 @@ public class PlayerMovement : MonoBehaviour
 
   void Update()
   {
+    // Update health bar
+    if (healthBar != null && healthBarBackground != null)
+    {
+      float healthPercentage = Mathf.Clamp01(health / maxHealth);
+      healthBar.localScale = new Vector3(healthPercentage, 1f, 1f);
+      healthBarBackground.localScale = new Vector3(1f, 1f, 1f);
+      if (healthText != null)
+      {
+        healthText.text = $"{health}";
+      }
+    }
+
+    // Handle Renegeneration
+    if (canRegenerateHealth && health < maxHealth && totalHealthRegenerated < healthRegenMaxTotalAmount)
+    {
+      healthRegenTimer += Time.deltaTime;
+      if (healthRegenTimer >= healthRegenStartDelay)
+      {
+        health += Mathf.RoundToInt(healthRegenAmount);
+        totalHealthRegenerated += healthRegenAmount;
+        healthRegenTimer = 0f;
+      }
+    }
+
     if (moveAction != null)
     {
       moveInput = moveAction.ReadValue<Vector2>();
