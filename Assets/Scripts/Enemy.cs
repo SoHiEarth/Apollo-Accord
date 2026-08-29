@@ -32,6 +32,14 @@ public class Enemy : MonoBehaviour
   public float projectileRange = 20f;
   public float projectileCooldown = 1f;
   public float projectileDamage = 5f;
+
+  [Header("Drop Settings")]
+  public GameObject ammoDropPrefab;
+  public int ammoDropAmountRangeMin = 2;
+  public int ammoDropAmountRangeMax = 4;
+  public GameObject healthDropPrefab;
+  public int healthDropAmountRangeMin = 1;
+  public int healthDropAmountRangeMax = 3;
   private float projectileCooldownTimer = 0f;
   private NavMeshAgent agent;
   private Transform player;
@@ -80,7 +88,8 @@ public class Enemy : MonoBehaviour
   {
     if (agent != null)
     {
-      agent.SetDestination(player.position);
+      // slightly offset the destination to avoid overlapping with the player
+      agent.SetDestination(player.position + (player.position - transform.position).normalized * 0.5f);
     }
   }
 
@@ -135,6 +144,21 @@ public class Enemy : MonoBehaviour
     if (health <= 0)
     {
       Destroy(gameObject);
+      // drop some ammo when the enemy is destroyed
+      if (ammoDropPrefab != null)
+      {
+        int ammoAmount = Random.Range(ammoDropAmountRangeMin, ammoDropAmountRangeMax + 1);
+        for (int i = 0; i < ammoAmount; i++)
+        {
+          Instantiate(ammoDropPrefab, transform.position + new Vector3(Random.Range(-1f, 1f), 0.5f, Random.Range(-1f, 1f)), Quaternion.identity);
+        }
+
+        int healthAmount = Random.Range(healthDropAmountRangeMin, healthDropAmountRangeMax + 1);
+        for (int i = 0; i < healthAmount; i++)
+        {
+          Instantiate(healthDropPrefab, transform.position + new Vector3(Random.Range(-1f, 1f), 0.5f, Random.Range(-1f, 1f)), Quaternion.identity);
+        }
+      }
     }
   }
 }

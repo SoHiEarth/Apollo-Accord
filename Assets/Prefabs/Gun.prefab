@@ -181,10 +181,12 @@ MonoBehaviour:
   totalAmmo: 125
   fireRate: 0.075
   reloadTime: 2.5
+  damage: 10
   ammoText: {fileID: 8767331793052971037}
   totalAmmoText: {fileID: 2185172482451899752}
   muzzleSmoke: {fileID: 9148070455887041930}
   bulletPrefab: {fileID: 2480464176229979612, guid: 8ad9270e9b6d34b41b654b6e36474791, type: 3}
+  damageIndicatorPrefab: {fileID: 2272476801519685504, guid: 74fe8edf8b49896459ac47ff55eb5568, type: 3}
   firePoint: {fileID: 4379291133850519620}
   bulletSpeed: 20
 --- !u!1 &9006430822625634168

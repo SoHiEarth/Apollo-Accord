@@ -16,6 +16,7 @@ public class WeaponScript : MonoBehaviour
     public TextMeshPro totalAmmoText;
     public GameObject muzzleSmoke;
     public GameObject bulletPrefab;
+    public GameObject damageIndicatorPrefab;
     public Transform firePoint;
     public float bulletSpeed = 500f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -72,6 +73,16 @@ public class WeaponScript : MonoBehaviour
                     if (enemy != null)
                     {
                         enemy.TakeDamage(damage);
+                        // Create a text popup at the hit point to show damage dealt
+                        Vector3 cameraPosition = Camera.main.transform.position;
+                        Vector3 popupPosition = (hit.point + cameraPosition) / 2f;
+                        GameObject damagePopup = Instantiate(damageIndicatorPrefab, popupPosition, Quaternion.identity);
+                        // also, make the text face the camera
+                        damagePopup.transform.LookAt(cameraPosition);
+                        TextMeshPro damageText = damagePopup.GetComponent<TextMeshPro>();
+                        damageText.text = damage.ToString();
+                        // Destroy the damage popup after 1 second
+                        Destroy(damagePopup, 0.3f);
                     }
                 }
             }
@@ -100,5 +111,11 @@ public class WeaponScript : MonoBehaviour
     public void Reload()
     {
         StartCoroutine(ReloadCoroutine());
+    }
+
+    public void AddAmmo(int amount)
+    {
+        totalAmmo += amount;
+        totalAmmoText.text = totalAmmo.ToString();
     }
 }

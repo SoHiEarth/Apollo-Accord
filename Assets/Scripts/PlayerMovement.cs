@@ -17,11 +17,12 @@ public class PlayerMovement : MonoBehaviour
   public RectTransform healthBar;
   public RectTransform healthBarBackground;
   public TextMeshProUGUI healthText;
+  public TextMeshProUGUI healthRegenText;
   [Header("Movement Settings")]
   public float speed = 5f;
-  public float runMultiplier = 1.5f;
-  public float jumpForce = 5f;
-  public float groundCheckDistance = 0.15f;
+  public float runMultiplier = 1.65f;
+  public float jumpForce = 6f;
+  public float groundCheckDistance = 0.1f;
   public LayerMask groundLayers = ~0;
   Rigidbody playerRigidbody;
   Vector2 moveInput;
@@ -35,6 +36,13 @@ public class PlayerMovement : MonoBehaviour
   public InputAction reloadAction;
   public InputAction crouchAction;
   public InputAction flashlightAction;
+  public InputAction switchItemAction;
+  public InputAction grappleAction;
+  [Header("Grapple Settings")]
+  public float grappleRange = 10f;
+  public float grappleSpeed = 20f;
+  private bool isGrappling = false;
+  private bool changeGrappleTarget = false;
   [Header("Item Settings")]
   public bool flashlightEnabled = true;
   public GameObject flashlight;
@@ -44,10 +52,12 @@ public class PlayerMovement : MonoBehaviour
   public int currentItemIndex = 0;
   GameObject currentItemInstance;
   public GameObject playerCamera;
+  public GameObject interactHUD;
   float pitch;
   // Animated a thumping red vignette when hp is low
   public GameObject thumpVolume;
   Animator thumpAnimator;
+  Vector3 grappleTarget;
   float playerColliderDefaultHeight;
 
   void Awake()
@@ -128,6 +138,16 @@ public class PlayerMovement : MonoBehaviour
       flashlightAction.Enable();
     }
 
+    if (switchItemAction != null)
+    {
+      switchItemAction.Enable();
+    }
+
+    if (grappleAction != null)
+    {
+      grappleAction.Enable();
+    }
+
     if (items.Length > 0)
     {
       SetItem(currentItemIndex);
@@ -162,6 +182,12 @@ public class PlayerMovement : MonoBehaviour
         totalHealthRegenerated += healthRegenAmount;
         healthRegenTimer = 0f;
       }
+      healthRegenText.text = $"Repairing damages, remaining charge: {healthRegenMaxTotalAmount - totalHealthRegenerated}/{healthRegenMaxTotalAmount}";
+      healthRegenText.gameObject.SetActive(true);
+    }
+    else
+    {
+      healthRegenText.gameObject.SetActive(false);
     }
 
     if (moveAction != null)
@@ -218,6 +244,14 @@ public class PlayerMovement : MonoBehaviour
       }
     }
 
+    // shoot raycast from the camera. if it hits an interactable, display the press e to interact text.
+    Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
+    RaycastHit hit;
+    if (Physics.Raycast(ray, out hit, 5f))
+    {
+      interactHUD.SetActive(hit.collider.CompareTag("Interactable"));
+    }
+
     // if mouse button down, set animator's "isShooting" parameter to true, otherwise set it to false
     if (Mouse.current.leftButton.isPressed)
     {
@@ -236,7 +270,31 @@ public class PlayerMovement : MonoBehaviour
       }
     }
 
-    
+    if (switchItemAction != null && switchItemAction.WasPressedThisFrame())
+    {
+      int nextItemIndex = (currentItemIndex + 1) % items.Length;
+      SetItem(nextItemIndex);
+    }
+
+    if (grappleAction != null && grappleAction.IsPressed())
+    {
+      isGrappling = true;
+      changeGrappleTarget = grappleAction.WasPressedThisFrame();
+      RaycastHit grappleHitInfo;
+      if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out grappleHitInfo, grappleRange) && changeGrappleTarget)
+      {
+        if (changeGrappleTarget)
+        {
+          grappleTarget = grappleHitInfo.point;
+          changeGrappleTarget = false;
+        }
+        // Create a visual effect for the grapple point
+        GameObject grappleEffect = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        grappleEffect.transform.position = grappleTarget;
+        grappleEffect.transform.localScale = Vector3.one * 0.2f;
+        Destroy(grappleEffect, 1f);
+      }
+    }
   }
 
   public void HolsterItem() {
@@ -275,11 +333,20 @@ public class PlayerMovement : MonoBehaviour
     playerCamera.transform.localRotation = Quaternion.Euler(pitch, 0f, 0f);
   }
 
+
   void FixedUpdate()
   {
     if (playerRigidbody == null)
     {
       return;
+    }
+
+    if (isGrappling)
+    {
+      Vector3 grappleDirection = (grappleTarget - playerRigidbody.position).normalized;
+      playerRigidbody.linearVelocity = grappleDirection * grappleSpeed;
+      isGrappling = false;
+      return; // Skip the rest of the movement code for this frame since we're grappling
     }
 
     UpdateGroundedState();
@@ -359,6 +426,36 @@ public class PlayerMovement : MonoBehaviour
     {
       // !!!! TEMP !!!!
       Destroy(gameObject);
+    }
+  }
+
+  public void AddHealth(float amount)
+  {
+    health += amount;
+    if (health > maxHealth)
+    {
+      health = maxHealth;
+    }
+  }
+
+  public void AddHealthRegen(float amount)
+  {
+    totalHealthRegenerated -= amount;
+    if (totalHealthRegenerated < 0)
+    {
+      totalHealthRegenerated = 0;
+    }
+  }
+
+  public void AddAmmo(int amount)
+  {
+    if (currentItemInstance != null)
+    {
+      WeaponScript weaponScript = currentItemInstance.GetComponentInChildren<WeaponScript>();
+      if (weaponScript != null)
+      {
+        weaponScript.AddAmmo(amount);
+      }
     }
   }
 }
