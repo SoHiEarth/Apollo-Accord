@@ -89,7 +89,7 @@ public class Enemy : MonoBehaviour
     if (agent != null)
     {
       // slightly offset the destination to avoid overlapping with the player
-      agent.SetDestination(player.position + (player.position - transform.position).normalized * 0.5f);
+      agent.SetDestination(player.position + (player.position - transform.position).normalized * 2f);
     }
   }
 
@@ -150,13 +150,13 @@ public class Enemy : MonoBehaviour
         int ammoAmount = Random.Range(ammoDropAmountRangeMin, ammoDropAmountRangeMax + 1);
         for (int i = 0; i < ammoAmount; i++)
         {
-          Instantiate(ammoDropPrefab, transform.position + new Vector3(Random.Range(-1f, 1f), 0.5f, Random.Range(-1f, 1f)), Quaternion.identity);
+          Instantiate(ammoDropPrefab, transform.position + new Vector3(Random.Range(-1f, 1f), 1f, Random.Range(-1f, 1f)), Quaternion.identity);
         }
 
         int healthAmount = Random.Range(healthDropAmountRangeMin, healthDropAmountRangeMax + 1);
         for (int i = 0; i < healthAmount; i++)
         {
-          Instantiate(healthDropPrefab, transform.position + new Vector3(Random.Range(-1f, 1f), 0.5f, Random.Range(-1f, 1f)), Quaternion.identity);
+          Instantiate(healthDropPrefab, transform.position + new Vector3(Random.Range(-1f, 1f), 1f, Random.Range(-1f, 1f)), Quaternion.identity);
         }
       }
     }

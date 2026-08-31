@@ -273,6 +273,7 @@ public class MainMenuHandler : MonoBehaviour
 
     private void OnStartButtonClicked()
     {
+        SaveSystem.SaveSystem.SaveGame(new SaveData(), "current", ShowSaveSuccessMessage);
         StartCoroutine(TransitionToMainScene());
     }
 
@@ -400,17 +401,7 @@ public class MainMenuHandler : MonoBehaviour
     // how much time is left.
     private System.Collections.IEnumerator TransitionToMainScene()
     {
-        canvas.SetActive(false);
-        overlayAnimator.Play("MainMenu_OverlayTransition", 0, 0f);
-        menuAnimator.Play("MainMenu_Transition", 0, 0f);
-        menuAnimator.Update(0f);
-        yield return null;
-        // wait for the animation to finish
-        while (menuAnimator.GetCurrentAnimatorStateInfo(0).IsName("MainMenu_Transition") && menuAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
-        {
-            yield return null;
-        }
-
+        overlay.SetActive(true);
         AsyncOperation operation = SceneManager.LoadSceneAsync("NewScene");
         while (!operation.isDone)
         {

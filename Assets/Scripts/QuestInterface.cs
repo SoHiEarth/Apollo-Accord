@@ -4,7 +4,6 @@ using TMPro;
 public class QuestInterface : MonoBehaviour
 {
     public TextMeshProUGUI QuestTitle;
-    public TextMeshProUGUI QuestDescription;
 
     public void SetQuestTitle(string title)
     {
@@ -19,12 +18,6 @@ public class QuestInterface : MonoBehaviour
         return "";
     }
 
-    public void SetQuestDescription(string description)
-    {
-        if (QuestDescription != null)
-            QuestDescription.text = description;
-    }
-
     public void ShowQuestInterface()
     {
         this.gameObject.SetActive(true);
@@ -34,8 +27,6 @@ public class QuestInterface : MonoBehaviour
     {
         if (QuestTitle != null)
             QuestTitle.text = "";
-        if (QuestDescription != null)
-            QuestDescription.text = "";
         this.gameObject.SetActive(false);
     }
 }

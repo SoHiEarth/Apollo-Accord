@@ -4,15 +4,12 @@ using System.Collections.Generic;
 
 public class OpeningCommander : MonoBehaviour
 {
-    Collider collider;
     Animator animator;
 
     public string questTitle = "Make Peace";
-    public string initialQuestDescription = "Go to the communications module.";
 
     void Start()
     {
-        collider = GetComponent<Collider>();
         animator = GetComponent<Animator>();
     }
 
@@ -33,7 +30,7 @@ public class OpeningCommander : MonoBehaviour
             PlayerQuest playerQuest = other.GetComponent<PlayerQuest>();
             if (playerQuest != null)
             {
-                playerQuest.SetQuest(questTitle, initialQuestDescription);
+                playerQuest.SetQuest(questTitle);
             }
         }
     }

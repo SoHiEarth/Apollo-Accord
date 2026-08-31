@@ -12,10 +12,10 @@ public class PlayerDialouge : MonoBehaviour
   TextMeshProUGUI dialougeText;
   public GameObject dialougePanel;
   Animator animator;
-  readonly Queue<DialougeEntry> dialougeQueue = new Queue<DialougeEntry>();
+  public readonly Queue<DialougeEntry> dialougeQueue = new Queue<DialougeEntry>();
   bool isPlayingDialouge;
 
-  struct DialougeEntry
+  public struct DialougeEntry
   {
     public string speaker;
     public string dialouge;

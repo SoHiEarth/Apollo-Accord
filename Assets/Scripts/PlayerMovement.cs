@@ -57,7 +57,11 @@ public class PlayerMovement : MonoBehaviour
   // Animated a thumping red vignette when hp is low
   public GameObject thumpVolume;
   Animator thumpAnimator;
+  Animator animator;
   Vector3 grappleTarget;
+  public float grappleCooldown = 1f;
+  public int grappleDamage = 10;
+  int framesSinceGrapple = 0;
   float playerColliderDefaultHeight;
 
   void Awake()
@@ -195,7 +199,10 @@ public class PlayerMovement : MonoBehaviour
       moveInput = moveAction.ReadValue<Vector2>();
     }
 
-    Animator animator = GetComponent<Animator>();
+    if (animator == null)
+    {
+      animator = GetComponent<Animator>();
+    }
     if (animator == null)
     {
       return;
@@ -212,10 +219,12 @@ public class PlayerMovement : MonoBehaviour
       if (crouchAction.IsPressed())
       {
         playerCollider.height = playerColliderDefaultHeight / 2f;
+        playerCollider.center = new Vector3(playerCollider.center.x, playerColliderDefaultHeight - playerColliderDefaultHeight / 4f, playerCollider.center.z);
       }
       else
       {
         playerCollider.height = playerColliderDefaultHeight;
+        playerCollider.center = new Vector3(playerCollider.center.x, 0.9f, playerCollider.center.z);
       }
     }
 
@@ -286,6 +295,15 @@ public class PlayerMovement : MonoBehaviour
         if (changeGrappleTarget)
         {
           grappleTarget = grappleHitInfo.point;
+          framesSinceGrapple = 0;
+
+          // if the grapple target is an enemy, call its TakeDamage() method with the grapple damage
+          Enemy enemy = grappleHitInfo.collider.GetComponent<Enemy>();
+          if (enemy != null)
+          {
+            enemy.TakeDamage(grappleDamage);
+          }
+
           changeGrappleTarget = false;
         }
         // Create a visual effect for the grapple point
@@ -298,7 +316,10 @@ public class PlayerMovement : MonoBehaviour
   }
 
   public void HolsterItem() {
-    Animator animator = GetComponent<Animator>();
+    if (animator == null)
+    {
+      animator = GetComponent<Animator>();
+    }
     if (animator)
     {
       animator.SetTrigger("holster_enter");
@@ -306,15 +327,16 @@ public class PlayerMovement : MonoBehaviour
   }
 
   public void UnholsterItem() {
-    Animator animator = GetComponent<Animator>();
+    if (animator == null)
+    {
+      animator = GetComponent<Animator>();
+    }
     if (animator)
     {
       animator.SetTrigger("holster_exit");
     }
   }
 
-  // Store the current X rotation of the player for use in mouse look
-  // this prevents the animator from override the player's yaw rotation
   float rotationX;
   void LateUpdate()
   {
@@ -343,8 +365,9 @@ public class PlayerMovement : MonoBehaviour
 
     if (isGrappling)
     {
+      framesSinceGrapple++;
       Vector3 grappleDirection = (grappleTarget - playerRigidbody.position).normalized;
-      playerRigidbody.linearVelocity = grappleDirection * grappleSpeed;
+      playerRigidbody.linearVelocity = grappleDirection * grappleSpeed * Mathf.Clamp01(framesSinceGrapple * 0.05f); // Increase speed over time while grappling
       isGrappling = false;
       return; // Skip the rest of the movement code for this frame since we're grappling
     }
@@ -361,8 +384,6 @@ public class PlayerMovement : MonoBehaviour
     Vector3 currentVelocity = playerRigidbody.linearVelocity;
     currentVelocity.x = desiredPlanarVelocity.x;
     currentVelocity.z = desiredPlanarVelocity.z;
-
-    Animator animator = GetComponent<Animator>();
 
     if (jumpQueued && isGrounded)
     {
@@ -399,6 +420,10 @@ public class PlayerMovement : MonoBehaviour
     }
 
     isGrounded = Physics.Raycast(origin, Vector3.down, castDistance, groundLayers, QueryTriggerInteraction.Ignore);
+    if (animator != null)
+    {
+      animator.SetBool("isGrounded", isGrounded);
+    }
   }
 
   void OnDestroy()
