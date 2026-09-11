@@ -8,7 +8,8 @@
 </div>
 
 > [!IMPORTANT]
-> This game is not finished. Major changes may occur.
+> Updates to this project is being held for the time being.
+> Thank you for your understanding. 
 
 ## Features
 
@@ -18,17 +19,15 @@
 - Immersive exploration.
   Space is waiting. Board your ship or send envoys to discover new planets or civilizations.
 - RPG-like features.
-  Connect with procedurally generated aliens to trade, fight or thrive.
+  ~~Connect with procedurally generated aliens to trade, fight or thrive.~~
+  ***Plan is postponed. Implementation will occur at a later date.***
 
 ## Platforms
 
-> [!IMPORTANT]
-> Not finalized.
-
 - Windows
 - macOS
-- Linux
-- Web Version (maybe)
+- Linux **[ Experimental ]**
+- Web Version **[ Experimental ]**
 
 ## Contributing
 I am making this game as part of the *Stardance* ysws event held by Hackclub. While I appreciate
@@ -60,14 +59,12 @@ Games like: *Starfield* (Ok I take that back, ***fan made*** *Starfield*)
 > All assets used are either public domain (CC Zero) or made by me.
 - ![Google Fonts](http://fonts.google.com/)
   *Specifically the font(s): Martian Mono*
-- ![Pixabay](https://pixabay.com/)
-  *Mainly for sound fx*
 - **Generous users on Reddit**
   *Example: Space Skybox*
 
 ### Usage of AI
 
 Places that used AI:
-- Character Voices (Not yet)
+- ~~Character Voices~~ ***The current release does not contain AI generated voices.***
 - Assistance of scripting code (GitHub Copilot, <10% of code is AI-assisted or generated)
 - Learning Unity (Google Search Summaries A.K.A. Google Gemini)
