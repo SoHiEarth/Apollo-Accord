@@ -236,7 +236,7 @@ MonoBehaviour:
   m_FontFeatureTable:
     m_MultipleSubstitutionRecords: []
     m_LigatureSubstitutionRecords:
-    - m_ComponentGlyphIDs: 44000000d8000000a8010000
+    - m_ComponentGlyphIDs: 44000000d8000000a8010000u
       m_LigatureGlyphID: 480
     m_GlyphPairAdjustmentRecords: []
     m_MarkToBaseAdjustmentRecords:
