@@ -34,9 +34,6 @@ I am making this game as part of the *Stardance* ysws event held by Hackclub. Wh
 your willingness to contribute, I will have to decline any pull requests for now. I want to have
 full control over this project for the time being.
 
-> [!NOTE]
-> I will reconsider once Stardance ends, or I finish developing this project.
-
 ## Credits
 
 ### Main Inspirations
