@@ -65,6 +65,6 @@ Games like: *Starfield* (Ok I take that back, ***fan made*** *Starfield*)
 ### Usage of AI
 
 Places that used AI:
-- ~~Character Voices~~ ***The current release does not contain AI generated voices.***
-- Assistance of scripting code (GitHub Copilot, <10% of code is AI-assisted or generated)
+- ~~Character Voices~~ **The current release does not contain AI generated voices.**
+- Assistance of scripting code (API: GitHub Copilot; Locations: `Assets/Scripts/Enemy.cs` Lines 55-85, `Assets/Scripts/PlayerMovement.cs` Lines 366-394, `Assets/Scripts/SaveSystem.cs` Lines 30-112)
 - Learning Unity (Google Search Summaries A.K.A. Google Gemini)
