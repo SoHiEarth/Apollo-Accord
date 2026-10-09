@@ -46,18 +46,14 @@ Games like: *Starfield* (Ok I take that back, ***fan made*** *Starfield*)
 > [!NOTE]
 > Tools may be added later on.
 
-- ![GIMP](https://github.com/gnome/gimp)
-  *Used for textures and promotions*
-- ![Unity](https://unity.com/)
-  *Game Engine. Used plugins such as ProBuilder, animations and UI (Canvas)*
+- [GIMP](https://github.com/gnome/gimp): *Used for textures and promotions*
+- [Unity](https://unity.com/): *Game Engine. Used plugins such as ProBuilder, animations and UI (Canvas)*
 
 ### Assets Source
 
 > All assets used are either public domain (CC Zero) or made by me.
-- ![Google Fonts](http://fonts.google.com/)
-  *Specifically the font(s): Martian Mono*
-- **Generous users on Reddit**
-  *Example: Space Skybox*
+- [Google Fonts](http://fonts.google.com/): *Specifically the font(s): Martian Mono*
+- **Generous users on Reddit**: *Example: Space Skybox*
 
 ### Usage of AI
 
